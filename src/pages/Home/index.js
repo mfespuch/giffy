@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { useGifs } from '../../hooks/useGifs';
-import ListOfGifs from '../../components/ListOfGifs';
+import { useGifs } from 'hooks/useGifs';
+import ListOfGifs from 'components/ListOfGifs';
+import TrendingSearches from "components/TrendingSearches";
 
 const POPULAR_GIFS = ["Matrix", "Chile", "Colombia", "Ecuador"];
 
@@ -27,13 +28,7 @@ export default function Home() {
                 <input onChange={handleChange} type='text' value={keyword}></input>
             </form>
             <ListOfGifs gifs={gifs} />
-            <ul>
-                {POPULAR_GIFS.map((popularGif) => (
-                    <li key={popularGif}>
-                        <Link to={`/search/${popularGif}`}>Gifs de {popularGif}</Link>
-                    </li>
-                ))}
-            </ul>
+            <TrendingSearches />
         </>
     )
 }
