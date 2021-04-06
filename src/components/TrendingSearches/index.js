@@ -1,22 +1,17 @@
-import React, {useEffect, useState, useRef} from 'react';
-import getTrendingTerms from 'services/getTrendingTermsService';
-import Category from 'components/Category';
+import React, { Suspense } from 'react';
 import useNearScreen from 'hooks/useNearScreen';
 
-function TrendingSearches () {
-    const [trends, setTrends] = useState([]);
-
-    useEffect(function () {
-        getTrendingTerms().then(setTrends);
-    }, [])
-
-    return <Category name="Tendencias" options={trends}/>
-}
+// import() como función es asincrono y devuelve una promesa, arriba los import son sincronos
+const TrendingSearches = React.lazy(
+    () => import('./TrendingSearchesLazy')
+);
 
 export default function LazyTrending () {
     const { isNearScreen, elementRef } = useNearScreen({});
 
     return <div ref={elementRef}>
-        {isNearScreen ? <TrendingSearches /> : null}
+        <Suspense fallback={null}>
+            {isNearScreen ? <TrendingSearches /> : null}
+        </Suspense>
     </div>
 }
